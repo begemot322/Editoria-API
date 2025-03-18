@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Editoria.Domain", "Editoria
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Editoria.Infrastructure", "Editoria.Infrastructure\Editoria.Infrastructure.csproj", "{FB85C006-6962-4F06-B584-6C1CA2CBF99C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Editoria.Application", "Editoria.Application\Editoria.Application.csproj", "{7AC2CBB8-F70F-4B57-95CA-57EA089342EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{FB85C006-6962-4F06-B584-6C1CA2CBF99C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB85C006-6962-4F06-B584-6C1CA2CBF99C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB85C006-6962-4F06-B584-6C1CA2CBF99C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AC2CBB8-F70F-4B57-95CA-57EA089342EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AC2CBB8-F70F-4B57-95CA-57EA089342EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AC2CBB8-F70F-4B57-95CA-57EA089342EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AC2CBB8-F70F-4B57-95CA-57EA089342EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
