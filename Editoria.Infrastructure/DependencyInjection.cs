@@ -1,4 +1,5 @@
-﻿using Editoria.Infrastructure.Persistence;
+﻿using Editoria.Application.Common.Interfaces;
+using Editoria.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +13,8 @@ public static class DependencyInjection
     {
         var connString = configuration.GetConnectionString("DefaultConnection");
         services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connString));
+
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;
     }
