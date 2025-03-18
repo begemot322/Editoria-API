@@ -17,6 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Editoria.Application\Editoria.Application.csproj" />
       <ProjectReference Include="..\Editoria.Domain\Editoria.Domain.csproj" />
     </ItemGroup>
 
