@@ -1,12 +1,12 @@
+using Editoria.Application;
 using Editoria.Infrastructure;
 using Editoria.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services
     .AddInfrastructureServices(builder.Configuration)
+    .AddApplication()
     .AddWebServices();
 
 var app = builder.Build();
