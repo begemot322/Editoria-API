@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using Editoria.Application.Common;
 using Editoria.Application.Common.Interfaces.Repositories;
 using Editoria.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -24,16 +25,41 @@ public class Repository<T> : IRepository<T> where T : class
         await _dbSet.AddRangeAsync(entities);
     }
 
-    public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null)
+    public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, bool tracked = false)
     {
         IQueryable<T> query = _dbSet;
+        
+        if (!tracked)
+            query = query.AsNoTracking();
         
         if (filter != null)
             query = query.Where(filter);
 
-        return await query.AsNoTracking().ToListAsync();
+        return await query.ToListAsync();
     }
-    
+
+    public async Task<PaginatedList<T>> GetPagedAsync(
+        int pageNumber,
+        int pageSize,
+        Expression<Func<T, bool>>? filter = null)
+    {
+        var query = _dbSet.AsQueryable();
+
+        if (filter != null)
+            query = query.Where(filter);
+        
+        
+        int totalCount = await query.CountAsync();
+        
+        var items = await query
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .AsNoTracking()
+            .ToListAsync();
+
+        return new PaginatedList<T>(items, totalCount, pageNumber, pageSize);
+    }
+
     public async Task<T?> GetAsync(Expression<Func<T, bool>>? filter = null)
     {
         IQueryable<T> query = _dbSet;
