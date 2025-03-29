@@ -15,5 +15,5 @@ public class CreateArticleCommand : IRequest<int>
 
     public int AuthorId { get; init; }
     
-    public int CategoryId { get; init; }
+    public List<int> CategoryIds { get; init; } = new List<int>();
 }

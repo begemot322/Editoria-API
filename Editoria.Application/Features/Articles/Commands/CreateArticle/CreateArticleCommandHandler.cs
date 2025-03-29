@@ -14,7 +14,6 @@ public class CreateArticleCommandHandler : IRequestHandler<CreateArticleCommand,
     }
     public async Task<int> Handle(CreateArticleCommand request, CancellationToken cancellationToken)
     {
-        var category = await _unitOfWork.Categories.GetByIdAsync(request.CategoryId);
 
         var article = new Article()
         {
@@ -25,19 +24,54 @@ public class CreateArticleCommandHandler : IRequestHandler<CreateArticleCommand,
             AuthorId = request.AuthorId,
         };
 
-        article.ArticleCategories = new List<ArticleCategory>()
+        var categories = await _unitOfWork.Categories
+            .GetAllAsync(c => request.CategoryIds.Contains(c.Id), tracked:false);
+
+        foreach (var category in categories)    
         {
-            new ArticleCategory()
+            article.ArticleCategories.Add(new ArticleCategory
             {
                 Article = article,
                 Category = category
-            }
-        };
+            });
+        }
 
         await _unitOfWork.Articles.AddAsync(article);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
-
+        
         return article.Id;
     }
 }
+
+
+// public async Task<int> Handle(CreateArticleCommand request, CancellationToken cancellationToken)
+// {
+//
+//     var article = new Article()
+//     {
+//         Title = request.Title,
+//         Text = request.Text,
+//         PublicationDate = request.PublicationDate,
+//         Status = request.Status,
+//         AuthorId = request.AuthorId,
+//     };
+//
+//     await _unitOfWork.Articles.AddAsync(article);
+//
+//     await _unitOfWork.SaveChangesAsync(cancellationToken);
+//
+//     foreach (var categoryId in request.CategoryIds)
+//     {
+//         var articleCategory = new ArticleCategory
+//         {
+//             ArticleId = article.Id,
+//             CategoryId = categoryId
+//         };
+//     }
+//
+//     await _unitOfWork.SaveChangesAsync(cancellationToken);
+//
+//     return article.Id;
+// }
+//
