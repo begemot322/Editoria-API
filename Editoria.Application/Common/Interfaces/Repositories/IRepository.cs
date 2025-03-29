@@ -6,7 +6,9 @@ public interface IRepository<T> where T : class
 {
     Task AddAsync(T entity);
     Task AddRangeAsync(IEnumerable<T> entities);
-    Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null);
+    Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, bool tracked = false);
+    Task<PaginatedList<T>> GetPagedAsync(int pageNumber, int pageSize,
+        Expression<Func<T, bool>>? filter = null);
     Task<T?> GetAsync(Expression<Func<T, bool>>? filter = null);
     Task<T?> GetByIdAsync(int id);
     void Delete(T entity);
