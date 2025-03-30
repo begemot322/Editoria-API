@@ -43,13 +43,13 @@ public class CategoryController(ISender sender) : ControllerBase
     }
 
     [HttpPut]
-    [ProducesResponseType(typeof(UpdateCategoryResult), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Update([FromBody] UpdateCategoryCommand update,
         CancellationToken token)
     {
-        var result = await sender.Send(update, token);
-        return Ok(result);
+        await sender.Send(update, token);
+        return NoContent();
     }
 
     [HttpDelete("{id}")]
