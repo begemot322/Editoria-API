@@ -43,35 +43,3 @@ public class CreateArticleCommandHandler : IRequestHandler<CreateArticleCommand,
         return article.Id;
     }
 }
-
-
-// public async Task<int> Handle(CreateArticleCommand request, CancellationToken cancellationToken)
-// {
-//
-//     var article = new Article()
-//     {
-//         Title = request.Title,
-//         Text = request.Text,
-//         PublicationDate = request.PublicationDate,
-//         Status = request.Status,
-//         AuthorId = request.AuthorId,
-//     };
-//
-//     await _unitOfWork.Articles.AddAsync(article);
-//
-//     await _unitOfWork.SaveChangesAsync(cancellationToken);
-//
-//     foreach (var categoryId in request.CategoryIds)
-//     {
-//         var articleCategory = new ArticleCategory
-//         {
-//             ArticleId = article.Id,
-//             CategoryId = categoryId
-//         };
-//     }
-//
-//     await _unitOfWork.SaveChangesAsync(cancellationToken);
-//
-//     return article.Id;
-// }
-//
