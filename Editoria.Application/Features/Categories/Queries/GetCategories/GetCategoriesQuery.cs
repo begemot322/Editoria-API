@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Editoria.Application.Features.Categories.Queries.GetCategories;
 
-public class GetCategoriesQuery : IRequest<IEnumerable<Category>>
+public class GetCategoriesQuery : IRequest<IEnumerable<CategoryListDto>>
 {
     public GetCategoriesQuery()
     {
