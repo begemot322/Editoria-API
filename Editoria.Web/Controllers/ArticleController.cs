@@ -1,5 +1,7 @@
 ﻿using Editoria.Application.Common;
 using Editoria.Application.Features.Articles.Commands.CreateArticle;
+using Editoria.Application.Features.Articles.Commands.DeleteArticle;
+using Editoria.Application.Features.Articles.Commands.UpdateArticle;
 using Editoria.Application.Features.Articles.Queries.GetArticleById;
 using Editoria.Application.Features.Articles.Queries.GetPagedArticles;
 using Editoria.Application.Features.Categories.Queries.GetCategoryById;
@@ -39,4 +41,24 @@ public class ArticleController(ISender sender) : Controller
         var articleId = await sender.Send(create, token);
         return CreatedAtAction(nameof(create), new { id = articleId }, articleId);
     }
+
+    [HttpPut]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Update([FromBody] UpdateArticleCommand update,
+        CancellationToken token)
+    {
+        await sender.Send(update, token);
+        return NoContent();
+    }
+    
+    [HttpDelete]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Delete(int id, CancellationToken token)
+    {
+        await sender.Send(new DeleteArticleCommand(id), token);
+        return NoContent();
+    }
+
 }
