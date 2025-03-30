@@ -25,7 +25,8 @@ public class Repository<T> : IRepository<T> where T : class
         await _dbSet.AddRangeAsync(entities);
     }
 
-    public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, bool tracked = false)
+    public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null,
+        bool tracked = false, string? includeProperties = null)
     {
         IQueryable<T> query = _dbSet;
         
@@ -34,6 +35,15 @@ public class Repository<T> : IRepository<T> where T : class
         
         if (filter != null)
             query = query.Where(filter);
+        
+        if (!string.IsNullOrEmpty(includeProperties))
+        {
+            foreach (var includeProp in includeProperties
+                         .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProp.Trim());
+            }
+        }
 
         return await query.ToListAsync();
     }
@@ -60,19 +70,26 @@ public class Repository<T> : IRepository<T> where T : class
         return new PaginatedList<T>(items, totalCount, pageNumber, pageSize);
     }
 
-    public async Task<T?> GetAsync(Expression<Func<T, bool>>? filter = null)
+    public async Task<T?> GetAsync(Expression<Func<T, bool>> filter, string? includeProperties = null,
+        bool tracked = false)
     {
         IQueryable<T> query = _dbSet;
-        
+
+        if (!tracked)
+            query = query.AsNoTracking();
+
         if (filter != null)
             query = query.Where(filter);
-        
-        return await query.AsNoTracking().FirstOrDefaultAsync();
-    }
-    
-    public async Task<T?> GetByIdAsync(int id)
-    {
-        return await _dbSet.FindAsync(id);
+
+        if (!string.IsNullOrEmpty(includeProperties))
+        {
+            foreach (var includeProp in includeProperties
+                         .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProp.Trim());
+            }
+        }
+        return await query.FirstOrDefaultAsync();
     }
     
     public void Delete(T entity)
