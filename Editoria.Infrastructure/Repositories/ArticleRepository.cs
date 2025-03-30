@@ -14,14 +14,18 @@ public class ArticleRepository : Repository<Article>, IArticleRepository
         _db = db;
     }
 
-    public async Task<Article?> GetArticleWithDetailsAsync(int articleId)
+    public async Task<Article?> GetArticleWithDetailsAsync(int articleId, bool tracked = false)
     {
-        return await _db.Set<Article>()
+        IQueryable<Article> query = _db.Set<Article>();
+
+        if (!tracked)
+            query = query.AsNoTracking();
+
+        return await query
             .Include(a => a.Author)
             .Include(a => a.ArticleCategories)
                 .ThenInclude(ac => ac.Category)
-            .AsNoTracking()
             .FirstOrDefaultAsync(a => a.Id == articleId);
-        
+
     }
 }   
