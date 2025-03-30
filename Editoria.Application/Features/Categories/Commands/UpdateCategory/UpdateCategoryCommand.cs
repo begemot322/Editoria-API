@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Editoria.Application.Features.Categories.Commands.UpdateCategory;
 
-public class UpdateCategoryCommand : IRequest<UpdateCategoryResult>
+public class UpdateCategoryCommand : IRequest<Unit>
 {
     public int Id { get; init; }
     
@@ -12,7 +12,3 @@ public class UpdateCategoryCommand : IRequest<UpdateCategoryResult>
     public string Description { get; init; }
 }
 
-public class UpdateCategoryResult
-{
-    public Category? Data { get; set; }
-}

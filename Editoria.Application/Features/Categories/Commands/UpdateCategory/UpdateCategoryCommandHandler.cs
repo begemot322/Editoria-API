@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Editoria.Application.Features.Categories.Commands.UpdateCategory;
 
-public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryCommand, UpdateCategoryResult>
+public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryCommand, Unit>
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -14,7 +14,7 @@ public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryComman
         _unitOfWork = unitOfWork;
     }
     
-    public async Task<UpdateCategoryResult> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
     {
         var category = await _unitOfWork.Categories.GetAsync(c=>c.Id == request.Id);
 
@@ -27,10 +27,7 @@ public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryComman
         _unitOfWork.Categories.Update(category);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
-        
-        return new UpdateCategoryResult
-        {
-            Data = category
-        };
+
+        return Unit.Value;
     }
 }
