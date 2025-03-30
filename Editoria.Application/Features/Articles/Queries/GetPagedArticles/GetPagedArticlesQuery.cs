@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Editoria.Application.Features.Articles.Queries.GetPagedArticles;
 
-public class GetPagedArticlesQuery : IRequest<PaginatedList<Article>>
+public class GetPagedArticlesQuery : IRequest<PaginatedList<ArticlePageDto>>
 {
     public int PageNumber { get; init; }
     public int PageSize { get; init; }
