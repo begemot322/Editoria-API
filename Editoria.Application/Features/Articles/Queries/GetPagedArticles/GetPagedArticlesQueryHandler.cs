@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Editoria.Application.Features.Articles.Queries.GetPagedArticles;
 
-public class GetPagedArticlesQueryHandler : IRequestHandler<GetPagedArticlesQuery, PaginatedList<Article>>
+public class GetPagedArticlesQueryHandler : IRequestHandler<GetPagedArticlesQuery, PaginatedList<ArticlePageDto>>
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -13,8 +13,22 @@ public class GetPagedArticlesQueryHandler : IRequestHandler<GetPagedArticlesQuer
     {
         _unitOfWork = unitOfWork;
     }
-    public async Task<PaginatedList<Article>> Handle(GetPagedArticlesQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedList<ArticlePageDto>> Handle(GetPagedArticlesQuery request, CancellationToken cancellationToken)
     {
-        return await _unitOfWork.Articles.GetPagedAsync(request.PageNumber, request.PageSize);
+        var articles = await _unitOfWork.Articles.GetPagedAsync(request.PageNumber, request.PageSize);
+
+        return new PaginatedList<ArticlePageDto>(
+            articles.Items.Select(article => new ArticlePageDto
+            {
+                Id = article.Id,
+                Title = article.Title,
+                Text = article.Text,
+                PublicationDate = article.PublicationDate,
+                Status = article.Status.ToString(),
+            }).ToList(),
+            articles.TotalCount,
+            request.PageNumber,
+            request.PageSize
+        );
     }
 }
