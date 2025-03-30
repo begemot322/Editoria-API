@@ -25,7 +25,7 @@ public class CreateArticleCommandHandler : IRequestHandler<CreateArticleCommand,
         };
 
         var categories = await _unitOfWork.Categories
-            .GetAllAsync(c => request.CategoryIds.Contains(c.Id), tracked:false);
+            .GetAllAsync(c => request.CategoryIds.Contains(c.Id), tracked:true);
 
         foreach (var category in categories)    
         {
