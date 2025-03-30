@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Editoria.Application.Features.Categories.Commands.DeleteCategory;
 
-public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryCommand>
+public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryCommand, Unit>
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -12,7 +12,7 @@ public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryComman
     {
         _unitOfWork = unitOfWork;
     }
-    public async Task Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
     {
         var category = await _unitOfWork.Categories.GetAsync(c=>c.Id == request.Id);
 
@@ -24,5 +24,7 @@ public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryComman
         _unitOfWork.Categories.Delete(category);
         
         await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return Unit.Value;
     }
 }
