@@ -4,5 +4,5 @@ namespace Editoria.Application.Common.Interfaces.Repositories;
 
 public interface IArticleRepository : IRepository<Article>
 {
-    Task<Article?> GetArticleWithDetailsAsync(int articleId);
+    Task<Article?> GetArticleWithDetailsAsync(int articleId, bool tracked = false);
 }
