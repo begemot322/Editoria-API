@@ -14,7 +14,7 @@ public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryComman
     }
     public async Task Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
     {
-        var category = await _unitOfWork.Categories.GetByIdAsync(request.Id);
+        var category = await _unitOfWork.Categories.GetAsync(c=>c.Id == request.Id);
 
         if (category == null)
         {
