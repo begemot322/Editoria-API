@@ -8,6 +8,8 @@ public class GetCategoryByIdQueryValidator : AbstractValidator<GetCategoryByIdQu
     {
         RuleFor(c => c.Id)
             .NotEmpty()
-            .WithMessage("Id не может быть пустым.");
+                .WithMessage("Id не может быть пустым.")
+            .GreaterThan(0)
+                .WithMessage("ID должен быть положительным числом");
     }
 }
