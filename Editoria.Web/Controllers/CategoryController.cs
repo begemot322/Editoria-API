@@ -15,7 +15,7 @@ namespace Editoria.Web.Controllers;
 public class CategoryController(ISender sender) : ControllerBase
 {
     [HttpGet("{id}")] 
-    [ProducesResponseType(typeof(Category), StatusCodes.Status200OK)]   
+    [ProducesResponseType(typeof(CategoryDto), StatusCodes.Status200OK)]   
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Get(int id, CancellationToken token)
     {
@@ -24,7 +24,7 @@ public class CategoryController(ISender sender) : ControllerBase
     }
     
     [HttpGet]
-    [ProducesResponseType(typeof(IEnumerable<Category>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(IEnumerable<CategoryListDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll(CancellationToken token)
     {
         var categories = await sender.Send(new GetCategoriesQuery(), token);
@@ -43,13 +43,13 @@ public class CategoryController(ISender sender) : ControllerBase
     }
 
     [HttpPut]
-    [ProducesResponseType(typeof(Category), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(UpdateCategoryResult), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Update([FromBody] UpdateCategoryCommand update,
         CancellationToken token)
     {
-        var category = await sender.Send(update, token);
-        return Ok(category);
+        var result = await sender.Send(update, token);
+        return Ok(result);
     }
 
     [HttpDelete("{id}")]
