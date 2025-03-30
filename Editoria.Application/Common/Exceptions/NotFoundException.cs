@@ -3,10 +3,5 @@ using MediatR.NotificationPublishers;
 
 namespace Editoria.Application.Common.Exceptions;
 
-public class NotFoundException : ApplicationException
-{
-    public NotFoundException(int id) : base(HttpStatusCode.NotFound, $"Entity with id {id} was not found")
-    {
-        
-    }
-}
+public class NotFoundException(int id)
+    : ApplicationException(HttpStatusCode.NotFound, $"Entity with id {id} was not found");
