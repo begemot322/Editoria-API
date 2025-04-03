@@ -1,10 +1,9 @@
 ﻿using System.Linq.Expressions;
 using Editoria.Application.Common;
 using Editoria.Application.Common.Interfaces.Repositories;
-using Editoria.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
-namespace Editoria.Infrastructure.Repositories;
+namespace Editoria.Infrastructure.Persistence.Repositories;
 
 public class Repository<T> : IRepository<T> where T : class
 {

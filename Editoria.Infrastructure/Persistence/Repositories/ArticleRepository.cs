@@ -1,9 +1,8 @@
 ﻿using Editoria.Application.Common.Interfaces.Repositories;
 using Editoria.Domain.Entities;
-using Editoria.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
-namespace Editoria.Infrastructure.Repositories;
+namespace Editoria.Infrastructure.Persistence.Repositories;
 
 public class ArticleRepository : Repository<Article>, IArticleRepository
 {
