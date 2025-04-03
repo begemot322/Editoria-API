@@ -24,7 +24,7 @@ public class ArticleController(ISender sender) : Controller
     }
     
     [HttpGet]
-    [ProducesResponseType(typeof(PaginatedList<ArticleDto>), StatusCodes.Status200OK)] 
+    [ProducesResponseType(typeof(PaginatedList<ArticlePageDto>), StatusCodes.Status200OK)] 
     public async Task<IActionResult> GetPaged([FromQuery] int pageNumber, [FromQuery] int pageSize )
     {
         var articlesList = await sender.Send(new GetPagedArticlesQuery(pageNumber, pageSize));
