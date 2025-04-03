@@ -19,11 +19,14 @@ public static class DependencyInjection
         {
             cfg.RegisterServicesFromAssembly(assembly);
             cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+            cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
         });
         
         // FluentValidation
         services.AddValidatorsFromAssembly(assembly);
         
+        
+
         
         return services;
     }
