@@ -1,9 +1,9 @@
 ﻿using Editoria.Application.Features.Categories.Commands.CreateCategory;
 using Editoria.Application.Features.Categories.Commands.DeleteCategory;
 using Editoria.Application.Features.Categories.Commands.UpdateCategory;
+using Editoria.Application.Features.Categories.Queries.Dtos;
 using Editoria.Application.Features.Categories.Queries.GetCategories;
 using Editoria.Application.Features.Categories.Queries.GetCategoryById;
-using Editoria.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,7 +24,7 @@ public class CategoryController(ISender sender) : ControllerBase
     }
     
     [HttpGet]
-    [ProducesResponseType(typeof(IEnumerable<CategoryListDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(IEnumerable<CategoryDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll(CancellationToken token)
     {
         var categories = await sender.Send(new GetCategoriesQuery(), token);
