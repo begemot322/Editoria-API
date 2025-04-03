@@ -1,6 +1,6 @@
 ﻿using Editoria.Application.Common.Interfaces;
 using Editoria.Application.Common.Interfaces.Repositories;
-using Editoria.Infrastructure.Repositories;
+using Editoria.Infrastructure.Persistence.Repositories;
 
 namespace Editoria.Infrastructure.Persistence;
 
