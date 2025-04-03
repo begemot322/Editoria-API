@@ -1,4 +1,4 @@
-﻿using Editoria.Domain.Entities;
+﻿using Editoria.Application.Features.Categories.Queries.Dtos;
 using MediatR;
 
 namespace Editoria.Application.Features.Categories.Queries.GetCategoryById;

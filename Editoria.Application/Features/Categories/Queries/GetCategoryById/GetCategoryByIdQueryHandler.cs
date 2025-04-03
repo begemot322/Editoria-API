@@ -1,6 +1,6 @@
 ﻿using Editoria.Application.Common.Exceptions;
 using Editoria.Application.Common.Interfaces;
-using Editoria.Domain.Entities;
+using Editoria.Application.Features.Categories.Queries.Dtos;
 using MediatR;
 
 namespace Editoria.Application.Features.Categories.Queries.GetCategoryById;
@@ -24,13 +24,7 @@ public class GetCategoryByIdQueryHandler : IRequestHandler<GetCategoryByIdQuery,
         {
             Id = category.Id,
             Name = category.Name,
-            Description = category.Description,
-            Articles = category.ArticleCategories.Select(a => new ArticleShortDto
-            {
-                Id = a.Article.Id,
-                Title = a.Article.Title,
-                PublicationDate = a.Article.PublicationDate
-            }).ToList()
+            Description = category.Description
         };
     }
 }

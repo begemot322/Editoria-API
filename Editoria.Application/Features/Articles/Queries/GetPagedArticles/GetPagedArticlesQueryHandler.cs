@@ -1,5 +1,6 @@
 ﻿using Editoria.Application.Common;
 using Editoria.Application.Common.Interfaces;
+using Editoria.Application.Features.Articles.Queries.Dtos;
 using Editoria.Domain.Entities;
 using MediatR;
 
