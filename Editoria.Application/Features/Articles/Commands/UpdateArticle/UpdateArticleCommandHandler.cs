@@ -8,10 +8,12 @@ namespace Editoria.Application.Features.Articles.Commands.UpdateArticle;
 public class UpdateArticleCommandHandler : IRequestHandler<UpdateArticleCommand, Unit>
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IRedisCacheService _cache;
 
-    public UpdateArticleCommandHandler(IUnitOfWork unitOfWork)
+    public UpdateArticleCommandHandler(IUnitOfWork unitOfWork, IRedisCacheService cache)
     {
         _unitOfWork = unitOfWork;
+        _cache = cache;
     }
 
     public async Task<Unit> Handle(UpdateArticleCommand request, CancellationToken cancellationToken)
@@ -24,7 +26,7 @@ public class UpdateArticleCommandHandler : IRequestHandler<UpdateArticleCommand,
         article.Title = request.Title;
         article.Text = request.Text;
         article.PublicationDate = request.PublicationDate;
-        article.Status = request.Status;
+        article.Status = request.Status;    
         article.AuthorId = request.AuthorId;
         
         article.ArticleCategories.Clear(); 
@@ -42,6 +44,8 @@ public class UpdateArticleCommandHandler : IRequestHandler<UpdateArticleCommand,
         }
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
+        
+        await _cache.RemoveDataAsync($"article_{request.Id}", cancellationToken);
 
         return Unit.Value;
     }
