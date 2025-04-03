@@ -1,4 +1,4 @@
-﻿using Editoria.Application.Features.Articles.Queries;
+﻿using Editoria.Application.Features.Articles.Queries.Dtos;
 using MediatR;
 
 namespace Editoria.Application.Features.Articles.Queries.GetArticleById;
