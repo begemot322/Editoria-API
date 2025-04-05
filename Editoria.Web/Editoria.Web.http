@@ -1,6 +1,0 @@
-@Editoria.Web_HostAddress = http://localhost:5075
-
-GET {{Editoria.Web_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
